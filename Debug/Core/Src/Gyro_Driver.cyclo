@@ -1,0 +1,11 @@
+../Core/Src/Gyro_Driver.c:6:6:GYRO_INIT	1
+../Core/Src/Gyro_Driver.c:52:6:GYRO_DEVICEID_PRINT	1
+../Core/Src/Gyro_Driver.c:58:6:GRYO_POWER	2
+../Core/Src/Gyro_Driver.c:78:6:GYRO_TEMPERATURE_PRINT	1
+../Core/Src/Gyro_Driver.c:86:6:GYRO_REGISTER_CONFIG	2
+../Core/Src/Gyro_Driver.c:109:9:GYRO_REGISTER_READ	2
+../Core/Src/Gyro_Driver.c:130:6:GYRO_HAL_SPI_CHECK	2
+../Core/Src/Gyro_Driver.c:137:6:GYRO_MANUAL_SLAVE_ENABLE	1
+../Core/Src/Gyro_Driver.c:143:6:GYRO_MANUAL_SLAVE_DISABLE	1
+../Core/Src/Gyro_Driver.c:165:22:GetTurnedSide	6
+../Core/Src/Gyro_Driver.c:219:6:DeactivateTurnFlag	1

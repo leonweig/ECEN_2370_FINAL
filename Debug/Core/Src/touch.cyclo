@@ -1,0 +1,2 @@
+../Core/Src/touch.c:3:23:GetTouchedSide	3
+../Core/Src/touch.c:22:23:GetTouchedSideHorizontal	3

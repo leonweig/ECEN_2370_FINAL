@@ -1,0 +1,11 @@
+../Core/Src/SinglePlayerAI.c:7:5:CheckWinnerSimulation	32	static
+../Core/Src/SinglePlayerAI.c:25:5:CheckRowWinnerSimulation	24	static
+../Core/Src/SinglePlayerAI.c:61:5:CheckColumnWinnerSimulation	24	static
+../Core/Src/SinglePlayerAI.c:97:5:CheckDiagonalWinnerSimulation	32	static
+../Core/Src/SinglePlayerAI.c:180:5:AIMove	88	static
+../Core/Src/SinglePlayerAI.c:220:5:FindEmptyRow	24	static
+../Core/Src/SinglePlayerAI.c:232:5:CheckWinMove	32	static
+../Core/Src/SinglePlayerAI.c:253:5:CheckBlockMove	32	static
+../Core/Src/SinglePlayerAI.c:277:5:CheckPlayer	40	static
+../Core/Src/SinglePlayerAI.c:407:5:CheckBoard	24	static
+../Core/Src/SinglePlayerAI.c:417:5:Probcount	16	static

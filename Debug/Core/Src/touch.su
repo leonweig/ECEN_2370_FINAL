@@ -1,0 +1,2 @@
+../Core/Src/touch.c:3:23:GetTouchedSide	16	static
+../Core/Src/touch.c:22:23:GetTouchedSideHorizontal	16	static

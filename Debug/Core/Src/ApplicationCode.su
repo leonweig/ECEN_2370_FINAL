@@ -1,0 +1,10 @@
+../Core/Src/ApplicationCode.c:23:6:applicationLevelGyroPower	8	static
+../Core/Src/ApplicationCode.c:26:6:applicationLevelGyroInit	8	static
+../Core/Src/ApplicationCode.c:31:6:applicationLevelButtonInterruptInit	8	static
+../Core/Src/ApplicationCode.c:43:6:ApplicationInit	8	static
+../Core/Src/ApplicationCode.c:60:6:LCD_Visual_Demo	8	static
+../Core/Src/ApplicationCode.c:66:6:LCD_Touch_Polling_Demo	8	static
+../Core/Src/ApplicationCode.c:86:6:RunGame	24	static
+../Core/Src/ApplicationCode.c:116:5:CalculatePlayTime	16	static
+../Core/Src/ApplicationCode.c:126:6:EXTI0_IRQHandler	8	static
+../Core/Src/ApplicationCode.c:132:6:HAL_GPIO_EXTI_Callback	16	static

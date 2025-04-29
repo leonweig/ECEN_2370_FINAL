@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "singleplayerai.h": "c",
+        "screen2.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "gyro_driver.h": "c",
+        "applicationcode.h": "c"
+    }
+}
