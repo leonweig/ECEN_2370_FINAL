@@ -76,10 +76,10 @@ void MakeMoveGyro(void){
     FullArray:
 
     TurnActive = TRUE;
-    while (TurnActive) {
+    while (TurnActive){
         Turn_Side_Left_Right TurnSide = GetTurnedSide();
 
-        if (TurnSide == LEFT_TURN){
+        if(TurnSide == LEFT_TURN){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinLeftPlayerOne();
@@ -90,7 +90,7 @@ void MakeMoveGyro(void){
             }
         }
 
-        if (TurnSide == RIGHT_TURN){
+        if(TurnSide == RIGHT_TURN){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinRightPlayerOne();
@@ -103,7 +103,7 @@ void MakeMoveGyro(void){
 
     }
 
-    if (BoardStatus[PlayerCoinPositionTurn][BoardRows - 1] != NoPlayer)
+    if(BoardStatus[PlayerCoinPositionTurn][BoardRows - 1] != NoPlayer)
     {
         //to not place when column is full
         goto FullArray;
@@ -111,7 +111,7 @@ void MakeMoveGyro(void){
 
     for (uint8_t i = 0; i < BoardRows; i++)
     {
-        if (BoardStatus[PlayerCoinPositionTurn][i] == NoPlayer)
+        if(BoardStatus[PlayerCoinPositionTurn][i] == NoPlayer)
         {
             BoardStatus[PlayerCoinPositionTurn][i] = PlayerTurn;
             goto Placed;
@@ -436,16 +436,16 @@ int CheckDiagonalWinner(void)
 }
 
 
-void MakeMove(void) {
+void MakeMove(void){
 FullArray:
 
     TurnActive = TRUE;
 
-    while (TurnActive) {
+    while (TurnActive){
 
         Touch_Side_Left_Right TouchedSide = GetTouchedSide();
 
-        if (TouchedSide == LEFT_TOUCH) {
+        if(TouchedSide == LEFT_TOUCH){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinLeftPlayerOne();
@@ -459,7 +459,7 @@ FullArray:
             } 
         }
 
-        if (TouchedSide == RIGHT_TOUCH) {
+        if(TouchedSide == RIGHT_TOUCH){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinRightPlayerOne();
@@ -474,14 +474,14 @@ FullArray:
 
     }
 
-    if (BoardStatus[PlayerCoinPositionTurn][BoardRows - 1] != NoPlayer)
+    if(BoardStatus[PlayerCoinPositionTurn][BoardRows - 1] != NoPlayer)
     {
         goto FullArray;
     }
 
     for (uint8_t i = 0; i < BoardRows; i++)
     {
-        if (BoardStatus[PlayerCoinPositionTurn][i] == NoPlayer) 
+        if(BoardStatus[PlayerCoinPositionTurn][i] == NoPlayer) 
         {
             BoardStatus[PlayerCoinPositionTurn][i] = PlayerTurn;
             goto Placed;

@@ -176,9 +176,11 @@ int CheckDiagonalWinnerSimulation(int BoardStatus[BoardColums][BoardRows])
 
 
 
-
+//all these functions have BoardStatus passed in since we dont have a written the other functions like this before (safer adding a function than changing things)
 int AIMove(int BoardStatus[BoardColums][BoardRows])
 {
+
+    //the AI first wants to win, then block, then find the best move with prioritizing the center columns
     int WinMove = CheckWinMove(BoardStatus);
     if(WinMove != -1){
         return WinMove;
@@ -190,6 +192,7 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
     }
 
     int BestMove = -1;
+
     int BestProb = -1000000;
     //in the center we have a better position
     int BestOrder[BoardColums] = {3, 4, 2, 5, 1, 6, 0};
@@ -197,6 +200,7 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
     for(int k = 0; k < BoardColums; k++)
     {
         int Column = BestOrder[k];
+
         int empty_row = FindEmptyRow(BoardStatus, Column);
         if(empty_row != -1)
         {
@@ -208,6 +212,7 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
             if(prob_count > BestProb)
             {
                 BestProb = prob_count;
+                
                 BestMove = Column;
             }
 
@@ -247,11 +252,13 @@ int CheckWinMove(int BoardStatus[BoardColums][BoardRows])
             }
         }
     }
+
     return -1;
 }
 
 int CheckBlockMove(int BoardStatus[BoardColums][BoardRows])
 {
+
     for(int i = 0; i < BoardColums; i++)
     {
         //we find the first empty row in column
@@ -274,11 +281,11 @@ int CheckBlockMove(int BoardStatus[BoardColums][BoardRows])
 
 
 
-int CheckPlayer(int BoardStatus[BoardColums][BoardRows], int player)
-{
+int CheckPlayer(int BoardStatus[BoardColums][BoardRows], int player){
+
     int prob = 0;
 
-    //we want to count all good formations of a player 
+    //we want to count all good formations of player 
     //horizontal check
     for(uint8_t i = 0; i < BoardRows; i++)
     {
@@ -399,14 +406,15 @@ int CheckPlayer(int BoardStatus[BoardColums][BoardRows], int player)
             }
         }
     }   
+
     return prob;
 }
 
 
 //we want too calculate the probability for the current board
-int CheckBoard(int BoardStatus[BoardColums][BoardRows])
-{
+int CheckBoard(int BoardStatus[BoardColums][BoardRows]){
     int prob = 0;
+
     prob = prob + CheckPlayer(BoardStatus, PlayerTwo);
     prob = prob - CheckPlayer(BoardStatus, PlayerOne);
 
