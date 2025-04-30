@@ -8,4 +8,4 @@
 ../Core/Src/Gyro_Driver.c:137:6:GYRO_MANUAL_SLAVE_ENABLE	1
 ../Core/Src/Gyro_Driver.c:143:6:GYRO_MANUAL_SLAVE_DISABLE	1
 ../Core/Src/Gyro_Driver.c:165:22:GetTurnedSide	6
-../Core/Src/Gyro_Driver.c:219:6:DeactivateTurnFlag	1
+../Core/Src/Gyro_Driver.c:221:6:DeactivateTurnFlag	1

@@ -14,7 +14,7 @@ int RunScreen2(bool SinglePlayerTrue);
 int PlayGameAgainstAI(void);
 int PlayGame(void);
 void MakeMoveGameAI(void);
-
+bool CheckTie(void);
 
 
 

@@ -6,7 +6,6 @@
 "./Core/Src/Screen2.o"
 "./Core/Src/Screen3.o"
 "./Core/Src/SinglePlayerAI.o"
-"./Core/Src/Timer_Driver.o"
 "./Core/Src/fonts.o"
 "./Core/Src/ili9341.o"
 "./Core/Src/main.o"

@@ -212,7 +212,7 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
             if(prob_count > BestProb)
             {
                 BestProb = prob_count;
-                
+
                 BestMove = Column;
             }
 

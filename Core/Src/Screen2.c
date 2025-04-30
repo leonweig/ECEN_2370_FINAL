@@ -14,6 +14,26 @@ static int PlayerTurn;
 static bool TurnActive;
 
 
+bool CheckTie(void){
+	int BoardRowsFull = 0;
+	for(int i = 0; i < BoardColums; i++)
+	{
+		//we only need to check the top rows (other functions do the rest already
+		if(BoardStatus[i][BoardRows - 1] != NoPlayer)
+		{
+			BoardRowsFull++;
+		}
+	}
+	if(BoardRowsFull == 6)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+
+
 void DeactivateTurn(void){
 	TurnActive = FALSE;
 	DeactivateTurnFlag();
@@ -42,7 +62,8 @@ void InitilizeBoardGame(void){
 int PlayGameAgainstAI(void){
 	InitilizeBoardGame();
     int Winner = NoPlayer;
-    while(Winner == NoPlayer)
+    bool Tie = FALSE;
+    while(Winner == NoPlayer || Tie == FALSE)
     {
     	//we need this delay for the button such that one can play in a smoother way
         HAL_Delay(200);
@@ -54,6 +75,7 @@ int PlayGameAgainstAI(void){
         {
             MakeMoveGameAI();
         }
+        Tie = CheckTie();
         Winner = CheckWinner();
         DisplayCurrentBoardGrid();
 
@@ -67,6 +89,7 @@ int PlayGameAgainstAI(void){
     {
         return PlayerTwoWin;
     }
+    //same function as PlayGame just with switching moves
 	return 0;
 }
 
@@ -146,11 +169,13 @@ int PlayGame(void){
 
     InitilizeBoardGame();
     int Winner = NoPlayer;
-    while(Winner == NoPlayer)
+    int Tie = FALSE;
+    while(Winner == NoPlayer || Tie == FALSE)
     {
         HAL_Delay(200);
         MakeMoveGyro();
         Winner = CheckWinner();
+        Tie = CheckTie();
         DisplayCurrentBoardGrid();
     }
     //now someone won the game
@@ -162,6 +187,7 @@ int PlayGame(void){
     {
         return PlayerTwoWin;
     }
+    //if no win we just return 0 or NoPlayer in enum s
     return 0;
 }
 
@@ -188,7 +214,7 @@ void DisplayGrid(void){
 	LCD_Draw_Horizontal_Line(0, 251, 240, LCD_COLOR_BLACK);
 	LCD_Draw_Horizontal_Line(0, 285, 240, LCD_COLOR_BLACK);
 
-	}
+}
 
 
 
