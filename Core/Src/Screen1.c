@@ -13,15 +13,15 @@ bool RunScreen1(void){
 void Display_Screen1(void){
     //first display the two colors on half of the screen
     //green is player one and red is player two
-	for (uint16_t y = 0; y < LCD_PIXEL_HEIGHT; y++) {
-	        for (uint16_t x = 0; x < LCD_PIXEL_WIDTH; x++) {
-	            frameBuffer[y * LCD_PIXEL_WIDTH + x] = (x < LCD_PIXEL_WIDTH / 2)
-	                ? LCD_COLOR_GREEN : LCD_COLOR_BLUE2;
-	        }
-	    }
-
-
-
+	for (uint16_t y = 0; y < LCD_PIXEL_HEIGHT; y++){
+        for (uint16_t x = 0; x < LCD_PIXEL_WIDTH / 2; x++){
+            frameBuffer[y * LCD_PIXEL_WIDTH + x] = LCD_COLOR_GREEN;
+        }
+        for (uint16_t x = LCD_PIXEL_WIDTH / 2; x < LCD_PIXEL_WIDTH; x++){
+            frameBuffer[y * LCD_PIXEL_WIDTH + x] = LCD_COLOR_BLUE2;
+        }
+    }
+    
 
     LCD_SetFont(&Font16x24);
     LCD_SetTextColor(LCD_COLOR_BLACK);

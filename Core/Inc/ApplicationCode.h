@@ -39,6 +39,6 @@ void RunGame(void);
 
 #if (COMPILE_TOUCH_FUNCTIONS == 1)
 void LCD_Touch_Polling_Demo(void);
-#endif // (COMPILE_TOUCH_FUNCTIONS == 1)
+#endif 
 
-#endif /* INC_APPLICATIONCODE_H_ */
+#endif 

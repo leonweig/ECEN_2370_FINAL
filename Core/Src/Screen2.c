@@ -24,8 +24,8 @@ bool GetTurnActive(void){
 }
 void InitilizeBoardGame(void){
 
-	for (int i = 0; i < BoardColums; i++) {
-	    for (int j = 0; j < BoardRows; j++) {
+	for (int i = 0; i < BoardColums; i++){
+	    for (int j = 0; j < BoardRows; j++){
 	        BoardStatus[i][j] = NoPlayer;
 	    }
 	}
@@ -58,7 +58,7 @@ int PlayGameAgainstAI(void){
         DisplayCurrentBoardGrid();
 
     }
-    //now someone won the game ;)
+    //now someone won th game 
     if(Winner == PlayerOneWin)
     {
         return PlayerOneWin;
@@ -76,11 +76,10 @@ void MakeMoveGyro(void){
     FullArray:
 
     TurnActive = TRUE;
-
     while (TurnActive) {
         Turn_Side_Left_Right TurnSide = GetTurnedSide();
 
-        if (TurnSide == LEFT_TURN) {
+        if (TurnSide == LEFT_TURN){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinLeftPlayerOne();
@@ -91,7 +90,7 @@ void MakeMoveGyro(void){
             }
         }
 
-        if (TurnSide == RIGHT_TURN) {
+        if (TurnSide == RIGHT_TURN){
             if(PlayerTurn == PlayerOne)
             {
                 MoveCoinRightPlayerOne();
@@ -106,6 +105,7 @@ void MakeMoveGyro(void){
 
     if (BoardStatus[PlayerCoinPositionTurn][BoardRows - 1] != NoPlayer)
     {
+        //to not place when column is full
         goto FullArray;
     }
 
@@ -153,7 +153,7 @@ int PlayGame(void){
         Winner = CheckWinner();
         DisplayCurrentBoardGrid();
     }
-    //now someone won the game ;)
+    //now someone won the game
     if(Winner == PlayerOneWin)
     {
         return PlayerOneWin;
@@ -171,22 +171,22 @@ int PlayGame(void){
 
 
 
-void DisplayGrid(void) {
-	    LCD_Draw_Vertical_Line(0, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(34, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(68, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(102, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(136, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(170, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(204, 0, 320, LCD_COLOR_BLACK);
-	    LCD_Draw_Vertical_Line(238, 0, 320, LCD_COLOR_BLACK);
+void DisplayGrid(void){
+	LCD_Draw_Vertical_Line(0, 0, 320, LCD_COLOR_BLACK);
+    LCD_Draw_Vertical_Line(34, 0, 320, LCD_COLOR_BLACK);
+    LCD_Draw_Vertical_Line(68, 0, 320, LCD_COLOR_BLACK);
+    LCD_Draw_Vertical_Line(102, 0, 320, LCD_COLOR_BLACK);
+	LCD_Draw_Vertical_Line(136, 0, 320, LCD_COLOR_BLACK);
+	LCD_Draw_Vertical_Line(170, 0, 320, LCD_COLOR_BLACK);
+	LCD_Draw_Vertical_Line(204, 0, 320, LCD_COLOR_BLACK);
+	LCD_Draw_Vertical_Line(238, 0, 320, LCD_COLOR_BLACK);
 
-	    LCD_Draw_Horizontal_Line(0, 115, 240, LCD_COLOR_BLACK);
-	    LCD_Draw_Horizontal_Line(0, 149, 240, LCD_COLOR_BLACK);
-	    LCD_Draw_Horizontal_Line(0, 183, 240, LCD_COLOR_BLACK);
-	    LCD_Draw_Horizontal_Line(0, 217, 240, LCD_COLOR_BLACK);
-	    LCD_Draw_Horizontal_Line(0, 251, 240, LCD_COLOR_BLACK);
-	    LCD_Draw_Horizontal_Line(0, 285, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 115, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 149, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 183, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 217, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 251, 240, LCD_COLOR_BLACK);
+	LCD_Draw_Horizontal_Line(0, 285, 240, LCD_COLOR_BLACK);
 
 	}
 
@@ -357,6 +357,7 @@ int CheckColumnWinner(void){
 
 int CheckDiagonalWinner(void)
 {
+    //we check both diagonal directions 
     for(uint8_t i = 0; i < BoardRows - 3; i++)
     {
         for(uint8_t j = 0; j < BoardColums - 3; j++)
@@ -393,7 +394,7 @@ int CheckDiagonalWinner(void)
             }
         }
     }
-
+    //cannot win under 4 rows (we check left to right top row down)
     for(uint8_t i = 3; i < BoardRows; i++)
     {
         for(uint8_t j = 0; j < BoardColums - 3; j++)
@@ -449,6 +450,7 @@ FullArray:
             {
                 MoveCoinLeftPlayerOne();
                 HAL_Delay(200);
+                //all these delays are mostly for a smoother gameplay
             }
             else
             {
@@ -523,6 +525,7 @@ void MakeMoveGameAI(void)
             break; 
         }
     }
+    //center position after move
     PlayerCoinPositionTurn = 3;
     ChangePlayer();
     DisplayCurrentBoardGrid();

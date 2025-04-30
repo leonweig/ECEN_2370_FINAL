@@ -166,6 +166,7 @@ Turn_Side_Left_Right GetTurnedSide(){
 	if(TurnFlag == 1)
 	{
 		uint32_t ReturnTime2 = HAL_GetTick();
+
 		while((ReturnTime2 - ReturnTime) < 1000)
 		{
 			//this loop will burn time if the TurnFlag is high
@@ -189,11 +190,12 @@ Turn_Side_Left_Right GetTurnedSide(){
         //signed int for roation data (positive rotation or negative)
         int16_t ValueYCombined = (int16_t)(GyroValueHighYShifted | GyroValueLowY);
 
+		//integratoin of acceleation 
         TurnValue = (ValueYCombined * 0.0001) + TurnValue;
 
 
 
-        //+100 to two complement binary
+        //+3 for threshold
         if(TurnValue > 3)
         {
         	TurnFlag = 1;
@@ -201,7 +203,7 @@ Turn_Side_Left_Right GetTurnedSide(){
         	TurnValue = 0;
             return RIGHT_TURN;
         }
-        //-100 to two compelemnt binary
+        //-3 for threshold
         else if(TurnValue < -3)
         {
         	TurnFlag = 1;
