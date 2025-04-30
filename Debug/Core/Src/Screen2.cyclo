@@ -13,9 +13,9 @@
 ../Core/Src/Screen2.c:271:6:DisplayPlayerOneCoinInBoard	1
 ../Core/Src/Screen2.c:281:6:DisplayPlayerTwoCoinInBoard	1
 ../Core/Src/Screen2.c:291:5:CheckWinner	7
-../Core/Src/Screen2.c:308:5:CheckRowWinner	8
-../Core/Src/Screen2.c:346:5:CheckColumnWinner	8
-../Core/Src/Screen2.c:384:5:CheckDiagonalWinner	16
+../Core/Src/Screen2.c:308:5:CheckColumnWinner	8
+../Core/Src/Screen2.c:346:5:CheckRowWinner	8
+../Core/Src/Screen2.c:384:5:CheckDiagonalWinner	15
 ../Core/Src/Screen2.c:465:6:MakeMove	9
 ../Core/Src/Screen2.c:535:6:MakeMoveGameAI	4
 ../Core/Src/Screen2.c:564:6:ChangePlayer	2

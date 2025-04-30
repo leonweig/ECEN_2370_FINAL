@@ -211,10 +211,12 @@ Turn_Side_Left_Right GetTurnedSide(){
         	TurnValue = 0;
             return LEFT_TURN;
         }
+        //inbetween we dont do anything -3 to +3
 
 
     }
-
+//to not get a warning but will never happen
+	return NONE_TURN;
 }
 
 //called when coin is dropped by interrupt

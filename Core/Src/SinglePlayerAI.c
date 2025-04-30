@@ -21,8 +21,8 @@ int CheckWinnerSimulation(int BoardStatus[BoardColums][BoardRows])
      return NoPlayer;
 }
 
-
-int CheckRowWinnerSimulation(int BoardStatus[BoardColums][BoardRows]){
+//those are the same functions as from Screen2.c but we pass in the BoardStatus since we dont have access to it
+int CheckColumnWinnerSimulation(int BoardStatus[BoardColums][BoardRows]){
     for(uint8_t i = 0; i < BoardColums; i++)
     {
         uint8_t four_in_row_player_one = 0;
@@ -58,7 +58,7 @@ int CheckRowWinnerSimulation(int BoardStatus[BoardColums][BoardRows]){
     return NoPlayer;
 }
 
-int CheckColumnWinnerSimulation(int BoardStatus[BoardColums][BoardRows]){
+int CheckRowWinnerSimulation(int BoardStatus[BoardColums][BoardRows]){
     for(uint8_t i = 0; i < BoardRows; i++)
     {
         uint8_t four_in_row_player_one = 0;
@@ -110,12 +110,12 @@ int CheckDiagonalWinnerSimulation(int BoardStatus[BoardColums][BoardRows])
                     four_in_diagonal_player_one++;
                     four_in_diagonal_player_two = 0;
                 }
-                if(BoardStatus[j+k][i+k] == PlayerTwo)
+                else if(BoardStatus[j+k][i+k] == PlayerTwo)
                 {
                     four_in_diagonal_player_two++;
                     four_in_diagonal_player_one = 0;
                 }
-                if(BoardStatus[j+k][i+k] == NoPlayer)
+                else
                 {
                     four_in_diagonal_player_one = 0;
                     four_in_diagonal_player_two = 0;
@@ -192,28 +192,27 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
     }
 
     int BestMove = -1;
-
     int BestProb = -1000000;
     //in the center we have a better position
     int BestOrder[BoardColums] = {3, 4, 2, 5, 1, 6, 0};
 
-    for(int k = 0; k < BoardColums; k++)
+    //simulate all moves and keep track of best move
+    for(int i = 0; i < BoardColums; i++)
     {
-        int Column = BestOrder[k];
+        int Colum = BestOrder[i];
+        int empty_row = FindEmptyRow(BoardStatus, Colum);
 
-        int empty_row = FindEmptyRow(BoardStatus, Column);
         if(empty_row != -1)
         {
-            BoardStatus[Column][empty_row] = PlayerTwo;
+            BoardStatus[Colum][empty_row] = PlayerTwo;
 
             int prob_count = CheckBoard(BoardStatus);
-            BoardStatus[Column][empty_row] = NoPlayer;
+            BoardStatus[Colum][empty_row] = NoPlayer;
 
-            if(prob_count > BestProb)
+            if(BestProb < prob_count)
             {
                 BestProb = prob_count;
-
-                BestMove = Column;
+                BestMove = Colum;
             }
 
         }
@@ -222,9 +221,9 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
 }
 
 
-int FindEmptyRow(int BoardStatus[BoardColums][BoardRows], int column){
+int FindEmptyRow(int BoardStatus[BoardColums][BoardRows], int colum){
     for(int j = 0; j < BoardRows; j++){
-        if(BoardStatus[column][j] == NoPlayer){
+        if(BoardStatus[colum][j] == NoPlayer){
             return j;
         }
     }
@@ -238,13 +237,12 @@ int CheckWinMove(int BoardStatus[BoardColums][BoardRows])
 {
     for(int i = 0; i < BoardColums; i++)
     {
-        //we find the first empty row in column
+        //first we find the empty row and simluate drops there for evey row
         int empty_row = FindEmptyRow(BoardStatus, i);
 
         if(empty_row != -1){
-            //now we simulate if it would be a win
             BoardStatus[i][empty_row] = PlayerTwo;
-            int possible_win = CheckWinner();
+            int possible_win = CheckWinnerSimulation(BoardStatus);
             BoardStatus[i][empty_row] = NoPlayer;
 
             if(possible_win == PlayerTwoWin){
@@ -261,13 +259,12 @@ int CheckBlockMove(int BoardStatus[BoardColums][BoardRows])
 
     for(int i = 0; i < BoardColums; i++)
     {
-        //we find the first empty row in column
+        //first we find the empty row and simluate drops there for evey row
         int empty_row = FindEmptyRow(BoardStatus, i);
 
         if(empty_row != -1){
-            //now we simulate if it would be a win
             BoardStatus[i][empty_row] = PlayerOne;
-            int possible_win = CheckWinner();
+            int possible_win = CheckWinnerSimulation(BoardStatus);
             BoardStatus[i][empty_row] = NoPlayer;
 
             if(possible_win == PlayerOneWin){
@@ -287,7 +284,9 @@ int CheckPlayer(int BoardStatus[BoardColums][BoardRows], int player){
 
     //we want to count all good formations of player 
     //horizontal check
-    for(uint8_t i = 0; i < BoardRows; i++)
+
+    //unlike our check winner functions we only want player specifics here
+    for(uint8_t i = 0; i < BoardColums; i++)
     {
         uint8_t numbers_row = 0;
         for(uint8_t j = 0; j < BoardRows; j++)

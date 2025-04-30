@@ -13,8 +13,8 @@
 ../Core/Src/Screen2.c:271:6:DisplayPlayerOneCoinInBoard	24	static
 ../Core/Src/Screen2.c:281:6:DisplayPlayerTwoCoinInBoard	24	static
 ../Core/Src/Screen2.c:291:5:CheckWinner	24	static
-../Core/Src/Screen2.c:308:5:CheckRowWinner	16	static
-../Core/Src/Screen2.c:346:5:CheckColumnWinner	16	static
+../Core/Src/Screen2.c:308:5:CheckColumnWinner	16	static
+../Core/Src/Screen2.c:346:5:CheckRowWinner	16	static
 ../Core/Src/Screen2.c:384:5:CheckDiagonalWinner	24	static
 ../Core/Src/Screen2.c:465:6:MakeMove	24	static
 ../Core/Src/Screen2.c:535:6:MakeMoveGameAI	24	static

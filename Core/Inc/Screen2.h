@@ -15,6 +15,7 @@ int PlayGameAgainstAI(void);
 int PlayGame(void);
 void MakeMoveGameAI(void);
 bool CheckTie(void);
+bool GetTurnActive(void);
 
 
 

@@ -11,7 +11,7 @@ const int RowCirclePosition[6] = {302, 268, 234, 200, 166, 132};
 
 static int PlayerCoinPositionTurn;
 static int PlayerTurn;
-static bool TurnActive;
+bool TurnActive;
 
 
 bool CheckTie(void){
@@ -24,7 +24,7 @@ bool CheckTie(void){
 			BoardRowsFull++;
 		}
 	}
-	if(BoardRowsFull == 6)
+	if(BoardRowsFull == BoardColums)
 	{
 		return TRUE;
 	}
@@ -63,7 +63,7 @@ int PlayGameAgainstAI(void){
 	InitilizeBoardGame();
     int Winner = NoPlayer;
     bool Tie = FALSE;
-    while(Winner == NoPlayer || Tie == FALSE)
+    while(Winner == NoPlayer && Tie == FALSE)
     {
     	//we need this delay for the button such that one can play in a smoother way
         HAL_Delay(200);
@@ -170,7 +170,7 @@ int PlayGame(void){
     InitilizeBoardGame();
     int Winner = NoPlayer;
     int Tie = FALSE;
-    while(Winner == NoPlayer || Tie == FALSE)
+    while(Winner == NoPlayer && Tie == FALSE)
     {
         HAL_Delay(200);
         MakeMoveGyro();
@@ -273,7 +273,7 @@ void DisplayPlayerOneCoinInBoard(uint8_t Column, uint8_t Row)
     uint16_t Position_In_X = ColumnCirclePosition[Column];
     uint16_t Position_In_Y = RowCirclePosition[Row];
 
-    //radius is 16
+    //radius is 16 of square
     LCD_Draw_Circle_Fill(Position_In_X, Position_In_Y, 16, LCD_COLOR_GREEN);
 }
 
@@ -283,7 +283,7 @@ void DisplayPlayerTwoCoinInBoard(uint8_t Column, uint8_t Row)
     uint16_t Position_In_X = ColumnCirclePosition[Column];
     uint16_t Position_In_Y = RowCirclePosition[Row];
 
-    //radius is 16
+    //radius is 16 of square
     LCD_Draw_Circle_Fill(Position_In_X, Position_In_Y, 16, LCD_COLOR_RED);
 }
 
@@ -305,7 +305,7 @@ int CheckWinner(void)
     return NoPlayer;
 }
 
-int CheckRowWinner(void){
+int CheckColumnWinner(void){
     for(uint8_t i = 0; i < BoardColums; i++)
         {
             //reset four_in_row in every row
@@ -314,17 +314,17 @@ int CheckRowWinner(void){
 
             for(uint8_t j = 0; j < BoardRows; j++)
             {
-                if(BoardStatus[i][j] == 0)
+                if(BoardStatus[i][j] == NoPlayer)
                 {
                     four_in_row_player_one = 0;
                     four_in_row_player_two = 0;
                 }
-                if(BoardStatus[i][j] == 1)
+                if(BoardStatus[i][j] == PlayerOne)
                 {
                     four_in_row_player_one++;
                     four_in_row_player_two = 0;
                 }
-                if(BoardStatus[i][j] == 2)
+                if(BoardStatus[i][j] == PlayerTwo)
                 {
                     four_in_row_player_one = 0;
                     four_in_row_player_two++;
@@ -343,7 +343,7 @@ int CheckRowWinner(void){
         return NoPlayer;
 }
 
-int CheckColumnWinner(void){
+int CheckRowWinner(void){
     for(uint8_t i = 0; i < BoardRows; i++)
         {
             //reset four_in_row in every row
@@ -352,17 +352,17 @@ int CheckColumnWinner(void){
 
             for(uint8_t j = 0; j < BoardColums; j++)
             {
-                if(BoardStatus[j][i] == 0)
+                if(BoardStatus[j][i] == NoPlayer)
                 {
                     four_in_row_player_one = 0;
                     four_in_row_player_two = 0;
                 }
-                if(BoardStatus[j][i] == 1)
+                if(BoardStatus[j][i] == PlayerOne)
                 {
                     four_in_row_player_one++;
                     four_in_row_player_two = 0;
                 }
-                if(BoardStatus[j][i] == 2)
+                if(BoardStatus[j][i] == PlayerTwo)
                 {
                     four_in_row_player_one = 0;
                     four_in_row_player_two++;
@@ -398,12 +398,12 @@ int CheckDiagonalWinner(void)
                     four_in_diagonal_player_one++;
                     four_in_diagonal_player_two = 0;
                 }
-                if(BoardStatus[j+k][i+k] == PlayerTwo)
+                else if(BoardStatus[j+k][i+k] == PlayerTwo)
                 {
                     four_in_diagonal_player_two++;
                     four_in_diagonal_player_one = 0;
                 }
-                if(BoardStatus[j+k][i+k] == NoPlayer)
+                else
                 {
                     four_in_diagonal_player_one = 0;
                     four_in_diagonal_player_two = 0;
@@ -461,7 +461,7 @@ int CheckDiagonalWinner(void)
     return NoPlayer;
 }
 
-
+//this is being used for normal gameplay (touch)
 void MakeMove(void){
 FullArray:
 
