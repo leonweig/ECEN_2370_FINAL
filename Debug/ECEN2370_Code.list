@@ -1151,8 +1151,8 @@ void GYRO_MANUAL_SLAVE_DISABLE(void){
 
 
 
-//we have to read the y-axis of the gyro p.20 on datasheet for reference
-//we have to read both registers (high and low) and combine them (output is 2s compliment data)
+
+//This function detects the acceleration and integrates it over time to get the angle, The angle resets after a certain time OR inbetween a certain angle.
 Turn_Side_Left_Right GetTurnedSide(){
  80009a8:	b580      	push	{r7, lr}
  80009aa:	b084      	sub	sp, #16
@@ -1171,9 +1171,9 @@ Turn_Side_Left_Right GetTurnedSide(){
  80009be:	6013      	str	r3, [r2, #0]
 
 
-
 	while(1)
 	{
+		// need this for breaking out of double loop in 2 files
 		if(GetTurnActive() == FALSE)
  80009c0:	f000 fd1a 	bl	80013f8 <GetTurnActive>
  80009c4:	4603      	mov	r3, r0
@@ -1190,6 +1190,7 @@ Turn_Side_Left_Right GetTurnedSide(){
  80009d6:	4603      	mov	r3, r0
  80009d8:	4a68      	ldr	r2, [pc, #416]	@ (8000b7c <GetTurnedSide+0x1d4>)
  80009da:	6013      	str	r3, [r2, #0]
+		//float since we need negatives and small numbers
 		float Integration =  (((float)TimeTwo - (float)TimeOne) / (float)1000);
  80009dc:	4b67      	ldr	r3, [pc, #412]	@ (8000b7c <GetTurnedSide+0x1d4>)
  80009de:	681b      	ldr	r3, [r3, #0]
@@ -1265,7 +1266,7 @@ Turn_Side_Left_Right GetTurnedSide(){
  8000a70:	2b00      	cmp	r3, #0
  8000a72:	d127      	bne.n	8000ac4 <GetTurnedSide+0x11c>
         {
-        	//+- 20 degree for minimum angle
+        	//+- 20 degree for minimu angle
         	if(TurnDistance > 20)
  8000a74:	4b45      	ldr	r3, [pc, #276]	@ (8000b8c <GetTurnedSide+0x1e4>)
  8000a76:	edd3 7a00 	vldr	s15, [r3]
@@ -1309,6 +1310,7 @@ Turn_Side_Left_Right GetTurnedSide(){
  8000ac2:	e054      	b.n	8000b6e <GetTurnedSide+0x1c6>
         	}
         }
+        //this onyl happens when we are between -3 and 3 so we never have a drift of the gyro since it is not working properly and adds random values
         if((TurnFlag == 0) && (TurnValueAngle < 3) && (TurnValueAngle > -3))
  8000ac4:	4b32      	ldr	r3, [pc, #200]	@ (8000b90 <GetTurnedSide+0x1e8>)
  8000ac6:	681b      	ldr	r3, [r3, #0]

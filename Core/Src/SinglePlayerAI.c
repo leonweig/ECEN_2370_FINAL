@@ -193,7 +193,7 @@ int AIMove(int BoardStatus[BoardColums][BoardRows])
 
     int BestMove = -1;
     int BestProb = -1000000;
-    //in the center we have a better position
+    //in the center we have a better position 
     int BestOrder[BoardColums] = {3, 4, 2, 5, 1, 6, 0};
 
     //simulate all moves and keep track of best move
@@ -285,7 +285,7 @@ int CheckPlayer(int BoardStatus[BoardColums][BoardRows], int player){
     //we want to count all good formations of player 
     //horizontal check
 
-    //unlike our check winner functions we only want player specifics here
+    //unlike our check winner functions we only want player specifics here 
     for(uint8_t i = 0; i < BoardColums; i++)
     {
         uint8_t numbers_row = 0;
@@ -425,7 +425,7 @@ int Probcount(int prob)
 {
     if(prob == 4)
     {
-        //this is a win so highest
+        //highest number for better move
         return 100;
     }
     else if(prob == 3)

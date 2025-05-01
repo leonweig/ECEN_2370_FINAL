@@ -80,7 +80,6 @@ int PlayGameAgainstAI(void){
         DisplayCurrentBoardGrid();
 
     }
-    //now someone won th game 
     if(Winner == PlayerOneWin)
     {
         return PlayerOneWin;
@@ -178,7 +177,6 @@ int PlayGame(void){
         Tie = CheckTie();
         DisplayCurrentBoardGrid();
     }
-    //now someone won the game
     if(Winner == PlayerOneWin)
     {
         return PlayerOneWin;
@@ -187,7 +185,7 @@ int PlayGame(void){
     {
         return PlayerTwoWin;
     }
-    //if no win we just return 0 or NoPlayer in enum s
+    //if no win we just return 0 (so nothing added to score in SCREEN 3)
     return 0;
 }
 
