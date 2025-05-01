@@ -147,39 +147,48 @@ void GYRO_MANUAL_SLAVE_DISABLE(void){
 
 
 
+//we have to read the y-axis of the gyro p.20 on datasheet for reference
+//we have to read both registers (high and low) and combine them (output is 2s compliment data)
 
 
+float TurnValueAngle;
 
-int16_t TurnValue;
+float TurnDistance = 0;
 
-uint32_t ReturnTime;
+uint32_t TimeOne = 0;
+
+uint32_t TimeTwo = 0;
+
+uint32_t LastTurn;
 
 int TurnFlag;
 
 
 
 
-
-//we have to read the y-axis of the gyro p.20 on datasheet for reference
-//we have to read both registers (high and low) and combine them (output is 2s compliment data)
+//This function detects the acceleration and integrates it over time to get the angle, The angle resets after a certain time OR inbetween a certain angle.
 Turn_Side_Left_Right GetTurnedSide(){
-	if(TurnFlag == 1)
-	{
-		uint32_t ReturnTime2 = HAL_GetTick();
 
-		while((ReturnTime2 - ReturnTime) < 1000)
-		{
-			//this loop will burn time if the TurnFlag is high
-			ReturnTime2 = HAL_GetTick();
-			TurnFlag = 0;
-		}
+	if(TimeOne == 0)
+	{
+		TimeOne = HAL_GetTick();
 	}
 
 
-	while(1){
-		if(GetTurnActive() == FALSE){
+
+	while(1)
+	{
+		// need this for breaking out of double loop in 2 files
+		if(GetTurnActive() == FALSE)
+		{
 			break;
 		}
+
+		TimeTwo = HAL_GetTick();
+		//float since we need negatives and small numbers
+		float Integration =  (((float)TimeTwo - (float)TimeOne) / (float)1000);
+		TimeOne = TimeTwo;
+
 
 
         uint8_t GyroValueLowY = GYRO_REGISTER_READ(OUT_Y_L);
@@ -190,30 +199,45 @@ Turn_Side_Left_Right GetTurnedSide(){
         //signed int for roation data (positive rotation or negative)
         int16_t ValueYCombined = (int16_t)(GyroValueHighYShifted | GyroValueLowY);
 
-		//integratoin of acceleation 
-        TurnValue = (ValueYCombined * 0.0001) + TurnValue;
+		//245 dps from CTRL_REG4 p.10 for values
+        TurnValueAngle = ValueYCombined * (float)0.00875;
+
+        TurnDistance = TurnDistance + (TurnValueAngle * Integration);
 
 
-
-        //+3 for threshold
-        if(TurnValue > 3)
+        if(TurnFlag == 0)
         {
-        	TurnFlag = 1;
-        	ReturnTime = HAL_GetTick();
-        	TurnValue = 0;
-            return RIGHT_TURN;
+        	//+- 20 degree for minimu angle
+        	if(TurnDistance > 20)
+        	{
+        		TurnFlag = 1;
+        		LastTurn = HAL_GetTick();
+        		return RIGHT_TURN;
+        	}
+        	if(TurnDistance < -20)
+        	{
+        		LastTurn = HAL_GetTick();
+        		TurnFlag = 1;
+        		return LEFT_TURN;
+        	}
         }
-        //-3 for threshold
-        else if(TurnValue < -3)
+        //this onyl happens when we are between -3 and 3 so we never have a drift of the gyro since it is not working properly and adds random values
+        if((TurnFlag == 0) && (TurnValueAngle < 3) && (TurnValueAngle > -3))
         {
-        	TurnFlag = 1;
-        	ReturnTime = HAL_GetTick();
-        	TurnValue = 0;
-            return LEFT_TURN;
+        	TurnDistance = 0;
         }
-        //inbetween we dont do anything -3 to +3
+        // we reset when time is too hand we are between -5 and 5
+        if((TurnFlag == 1) || ((TimeTwo - LastTurn) > 2000))
+        {
 
-
+        	//if we are between -5 and 5 we reset (values come from testing)
+        	if(((TurnDistance > -5) && (TurnDistance < 5)) || ((TimeTwo - LastTurn) > 2000))
+        	{
+        		LastTurn = HAL_GetTick();
+        		TurnFlag = 0;
+        		TurnDistance = 0;
+        	}
+        }
     }
 //to not get a warning but will never happen
 	return NONE_TURN;

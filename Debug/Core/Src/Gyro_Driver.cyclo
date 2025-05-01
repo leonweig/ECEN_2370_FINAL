@@ -7,5 +7,5 @@
 ../Core/Src/Gyro_Driver.c:130:6:GYRO_HAL_SPI_CHECK	2
 ../Core/Src/Gyro_Driver.c:137:6:GYRO_MANUAL_SLAVE_ENABLE	1
 ../Core/Src/Gyro_Driver.c:143:6:GYRO_MANUAL_SLAVE_DISABLE	1
-../Core/Src/Gyro_Driver.c:165:22:GetTurnedSide	6
-../Core/Src/Gyro_Driver.c:223:6:DeactivateTurnFlag	1
+../Core/Src/Gyro_Driver.c:170:22:GetTurnedSide	14
+../Core/Src/Gyro_Driver.c:244:6:DeactivateTurnFlag	1
